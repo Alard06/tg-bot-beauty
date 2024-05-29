@@ -4,15 +4,27 @@ CREATE TABLE masters (
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     tg_id VARCHAR(30),
-    available_time_slots JSONB
+    available_time_slots JSONB,
+    specialties JSONB
 );
+"""
+
+specialties = """
+CREATE TABLE specialties (
+service INT,
+master INT, 
+FOREIGN KEY (master) REFERENCES masters (ID),
+FOREIGN KEY (service) REFERENCES services (ID)
+);
+
 """
 
 client = """
 CREATE TABLE client (
 ID SERIAL PRIMARY KEY,
 fi VARCHAR(255),
-phone_number VARCHAR(15)
+phone_number VARCHAR(15),
+tg_id VARCHAR(40)
 );
 """
 

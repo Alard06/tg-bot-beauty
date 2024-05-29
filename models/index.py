@@ -8,6 +8,7 @@ def create_table(cursor, conn):
     cursor.execute(executes.client)
     cursor.execute(executes.service)
     cursor.execute(executes.appointments)
+    cursor.execute(executes.specialties)
 
     conn.commit()
 
