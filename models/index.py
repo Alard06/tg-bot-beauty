@@ -29,7 +29,7 @@ def main():
                             port="5432")
 
     cursor = conn.cursor()
-    # create_table(cursor, conn)
+    create_table(cursor, conn)
     show_name_tables(cursor, conn)
 
 

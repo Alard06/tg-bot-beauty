@@ -11,8 +11,7 @@ CREATE TABLE masters (
 client = """
 CREATE TABLE client (
 ID SERIAL PRIMARY KEY,
-first_name VARCHAR(255),
-last_name VARCHAR(255),
+fi VARCHAR(255),
 phone_number VARCHAR(15)
 );
 """
