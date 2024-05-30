@@ -1,6 +1,7 @@
 import time
 
 import psycopg2
+from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 conn = psycopg2.connect(dbname="tg_bot",
                         user="postgres",
@@ -50,3 +51,29 @@ def add_phone_number(telegram_id, phone_number):
 
     except Exception as e:
         print('Error: ', e)
+
+
+def check_records(telegram_id):
+    pass
+
+
+def show_dates():
+    conn, cursor = connect_to_db()
+    # Выполнение запроса
+    cursor.execute("SELECT DISTINCT jsonb_object_keys(available_time_slots) AS day_of_week FROM masters")
+    rows = cursor.fetchall()
+
+    # Формирование сообщения с inline кнопками
+    message = "Выберите день недели:"
+    keyboard = []
+    for row in rows:
+        day_of_week = row[0]
+        button = InlineKeyboardButton(day_of_week, callback_data=day_of_week)
+        keyboard.append([button])
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    # Закрытие соединения с базой данных
+    cursor.close()
+    conn.close()
+    return message, reply_markup

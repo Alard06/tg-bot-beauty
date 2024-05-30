@@ -43,14 +43,33 @@ def main():
     @bot.callback_query_handler(func=lambda call: call.data == 'Nails')
     def nails(call):
         inline_btn = InlineKeyboardMarkup().add(inline_btn8, inline_btn9, inline_main)
-        bot.send_message(call.message.chat.id, 'nails', reply_markup=inline_btn)
+        msg, reply_markup = show_dates()
+        bot.send_message(call.message.chat.id, msg, reply_markup=reply_markup)
+
+    @bot.callback_query_handler(func=lambda call: True)
+    def callback_handler(call):
+        selected_day = call.data
+
+        free_time_slots = get_free_time_slots(selected_day)  # Функция для получения свободного времени у мастера
+
+        message = f"Свободное время у мастера в {selected_day}:\n"
+        for time_slot in free_time_slots:
+            message += f"- {time_slot}\n"
+
+        bot.send_message(call.message.chat.id, message)
+
+    def get_free_time_slots(day_of_week):
+        # Здесь вы можете выполнить запрос к базе данных и получить свободное время у мастера для выбранного дня недели
+        # В данном примере, я просто возвращаю фиктивные данные
+        free_time_slots = ["10:00", "12:00", "14:00"]
+        return free_time_slots
 
     @bot.callback_query_handler(func=lambda call: call.data == 'Hair')
-    def nails(call):
+    def hair(call):
         bot.send_message(call.message.chat.id, 'Hair')
 
     @bot.callback_query_handler(func=lambda call: call.data == 'Eyelash')
-    def nails(call):
+    def eyelash(call):
         bot.send_message(call.message.chat.id, 'Eyelash')
 
     @bot.callback_query_handler(func=lambda call: call.data == 'main_menu')
